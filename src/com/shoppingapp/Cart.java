@@ -49,7 +49,7 @@ public class Cart {
 		return true;
 	}
 
-	public Integer getProductCount(Product product) {
+	public int getProductCount(Product product) {
 		return products.get(product);
 	}
 }
