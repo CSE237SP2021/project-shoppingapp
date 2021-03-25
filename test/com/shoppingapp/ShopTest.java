@@ -9,6 +9,7 @@ public class ShopTest {
 	@Test
 	public void testGetterFunction() {
 		
+		String shopName = "Apple Store";
 		String ownerName = "Tim Cook";
 		
 		String productName = "MacBook Pro";
@@ -24,7 +25,7 @@ public class ShopTest {
 		Product productUnderTestKai2 = new Product(productName2, productBrand2, productPriceInCent2);
 		
 		Product[] topSales = {productUnderTest, productUnderTestKai2};
-		Shop shop1 = new Shop(ownerName, topSales);
+		Shop shop1 = new Shop(shopName, ownerName, topSales);
 		assertEquals(shop1.getownerName(), ownerName);
 		assertEquals(shop1.getallSales(), topSales);
 	
@@ -33,6 +34,7 @@ public class ShopTest {
 	@Test
 	public void testGetTopSales() {
 
+		String shopName = "Apple Store";
 		String ownerName = "Tim Cook";
 		
 		String productName = "MacBook Pro";
@@ -49,7 +51,7 @@ public class ShopTest {
 		
 		Product[] topSales = {productUnderTest, productUnderTestKai2};
 		
-		Shop shop1 = new Shop(ownerName, topSales);
+		Shop shop1 = new Shop(shopName, ownerName, topSales);
 		
 		try{
 			shop1.getTopSales(2);

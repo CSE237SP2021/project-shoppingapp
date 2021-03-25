@@ -8,16 +8,36 @@ public class Shop {
 	 * The basic class for setting up shops.
 	 */
 
+	private String shopName;
     private String ownerName;
     private Product[] allSales;
+    
+    private final String[] randomShopNames = {"Goblin Market", "Bauer Hall", "Village Hall"};
+    
+    private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google"};
+    
+    //private final Product[] randomProducts = {new Product(), new Product(), new Product()};
 
-    public Shop(String ownerName, Product[] allSales){
+    public Shop(String shopName, String ownerName, Product[] allSales){
 
+    	this.shopName = shopName;
         this.ownerName = ownerName;
         this.allSales = allSales;
     	
     }
     
+    /**
+     * Randomized shop generator with allOwners function
+     */
+    public Shop() {
+    	this.shopName = randomOwners[(int) Math.floor(Math.random()* randomOwners.length)];
+    	this.ownerName = randomShopNames[(int) Math.floor(Math.random()* randomShopNames.length)];
+    	this.allSales = new Product[]{new Product(), new Product(), new Product()};
+    }
+    
+    public String getShopName() {
+    	return this.shopName;
+    }
 
     
     public String getownerName() {
@@ -47,6 +67,13 @@ public class Shop {
     		}
     		return newSales;
     	}
+    }
+    
+    public String toString() {
+    	this.shopName = shopName;
+        this.ownerName = ownerName;
+        this.allSales = allSales;
+    	return "|" + this.shopName + "|" + this.ownerName;
     }
     
     
