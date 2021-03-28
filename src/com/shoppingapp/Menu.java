@@ -9,7 +9,7 @@ public class Menu {
 	private static Shop[] shops = new Shop[SHOP_SIZE];
 
     public static void main(String[] args) {
-    // write your code here
+    	// shop page initialization
     	randomizedEntry();
     	welcomePage();
     }
@@ -60,7 +60,7 @@ public class Menu {
     	newScanner.close();
     }
     
-    	private static void goToShopPage(int value){
+    private static void goToShopPage(int value){
     		
-    	}
+    }
 }
