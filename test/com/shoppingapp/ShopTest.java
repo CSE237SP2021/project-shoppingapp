@@ -26,8 +26,8 @@ public class ShopTest {
 		
 		Product[] topSales = {productUnderTest, productUnderTestKai2};
 		Shop shop1 = new Shop(shopName, ownerName, topSales);
-		assertEquals(shop1.getownerName(), ownerName);
-		assertEquals(shop1.getallSales(), topSales);
+		assertEquals(shop1.getOwnerName(), ownerName);
+		assertEquals(shop1.getAllSales(), topSales);
 	
 	}
 	

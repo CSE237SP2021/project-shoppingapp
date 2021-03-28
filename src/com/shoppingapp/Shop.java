@@ -39,12 +39,11 @@ public class Shop {
     	return this.shopName;
     }
 
-    
-    public String getownerName() {
+    public String getOwnerName() {
     	return this.ownerName;
     }
     
-    public Product[] getallSales() {
+    public Product[] getAllSales() {
     	return this.allSales;
     }
     
