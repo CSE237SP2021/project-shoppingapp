@@ -15,21 +15,21 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 ### Iteration 1
 
 * What user stories were completed this iteration?
-  Users can add a product to the shopping cart.<br>
-  Users can remove a product from the shopping cart.<br>
-  Shop main page displays a list of products.<br>
-  The shop menu page shows options for users: 1. Search Items 2. View items 3. View cart 0. Quit.<br>
+  * Users can add a product to the shopping cart.
+  * Users can remove a product from the shopping cart.
+  * Shop main page displays a list of products.
+  * The shop menu page shows options for users: 1. Search Items 2. View items 3. View cart 0. Quit.<br>
 
 * What user stories do you intend to complete next iteration?
-  The shop menu page option "Search Items" functions well.<br>
-  The shop menu page option "View items" functions well.<br>
-  The shop menu page option "View cart" functions well.<br>
-  Users can check out the products in the cart<br>
+  * The shop menu page option "Search Items" functions well.
+  * The shop menu page option "View items" functions well.
+  * The shop menu page option "View cart" functions well.
+  * Users can check out the products in the cart
   
 * Is there anything that you implemented but doesn't currently work?
-  N/A
+  * N/A
 
 * What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
-  ./run.sh
+  * `./run.sh`
 
 
