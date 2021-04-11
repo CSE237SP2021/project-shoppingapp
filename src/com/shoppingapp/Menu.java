@@ -1,16 +1,19 @@
 package com.shoppingapp;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Menu {
-
-	private Scanner keyboardIn;
-
 	private static final int SHOP_SIZE = 3;
+	// Hardcoded for correctness purposes; similar to CHAR(24) and CHAR(15) in MySQL
+	private static final int PRODUCT_NAME_LENGTH = 24;
+	private static final int SHOP_NAME_LENGTH = 15;
+	private static final int PRICE_LENGTH = 13;
 
 	private static Shop[] shops = new Shop[SHOP_SIZE];
+	private static Cart cart = new Cart();
 
-	private static Scanner newScanner;
+	private static Scanner scanner;
 
 	public static void main(String[] args) {
 		// shop page initialization
@@ -30,13 +33,12 @@ public class Menu {
 	/**
 	 * The welcome page for users.
 	 */
-
 	private static void welcomePage() {
 		System.out.println("Welcome to the Shopping App, best Shopping App in 2021!");
-		newScanner = new Scanner(System.in); // Create a Scanner object
+		scanner = new Scanner(System.in); // Create a Scanner object
 		// 1. Search items 2. View items 3. View cart 0. Quit
 		makeMenuChoice();
-		newScanner.close();
+		scanner.close();
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class Menu {
 			System.out.println("2: View items");
 			System.out.println("3: View cart");
 			System.out.println("0: Quit");
-			value = getValidOutput(newScanner, 4);
+			value = getValidUserInput(scanner, 4);
 			switch (value) {
 			case 0:
 				System.out.println("Bye!");
@@ -73,10 +75,17 @@ public class Menu {
 	}
 	
 	private static void viewItems() {
-		displayShop();
-		displayProduct();
-		int value = getValidOutput(newScanner, shops.length);
-		goToShopPage(value);
+		displayShops();
+		int shopNo = getValidUserInput(scanner, shops.length);
+		displayItems(shopNo);
+		System.out.println("Please enter the ID of the element to add to cart. \"0\" for exit");
+		int productNo = getValidUserInput(scanner, shops[shopNo].getAllSales().length + 1);
+		if (productNo > 0) {
+			Product productToBeAdd = shops[shopNo].getAllSales()[productNo - 1];
+			System.out.print("Please enter the number of the item you would like to buy: ");
+			int numberOfTheItems = getUserInput();
+			cart.addProduct(productToBeAdd, numberOfTheItems);
+		}
 	}
 
 	/**
@@ -90,8 +99,15 @@ public class Menu {
 
 	private static void viewCart() {
 		System.out.println("************************");
-		System.out.println("UNDER CONSTRUCTION");
-		System.out.println("This page is still under construction. Expect for Iteration 2!");
+			System.out.println("The items in your cart");
+		for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
+			System.out.println("Name                    |Price in cent|Count");
+			StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
+			StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
+			System.out.println(productName + "|" + price + productCountPair.getValue());
+		}
+		System.out.println();
+		System.out.println("Total price in cent: " + cart.totalPriceInCent());
 	}
 
 	/**
@@ -101,18 +117,18 @@ public class Menu {
 	 * @param limit      the number of valid options, for fast checking
 	 * @return value the value extracted
 	 */
-	private static int getValidOutput(Scanner newScanner, int limit) {
-		String choice = "";
+	private static int getValidUserInput(Scanner newScanner, int limit) {
+		String choice;
 		int value = 0;
-		boolean canary = false;
-		while (!canary) {
-			System.out.println("Please choose your target store, by typing the store number");
+		boolean successful = false;
+		while (!successful) {
+			System.out.print("Please enter your choice: ");
 			if (newScanner.hasNextLine()) {
 				choice = newScanner.nextLine();
 				try {
 					value = Integer.parseInt(choice);
 					if (value < limit) {
-						canary = true;
+						successful = true;
 					} else {
 						System.out.println("Invalid input: No valid options available!");
 					}
@@ -125,67 +141,48 @@ public class Menu {
 		return value;
 	}
 
-	private static void displayShop() {
+	private static void displayShops() {
 		System.out.println("************************");
-		System.out.println("The shops are as listed");
+		System.out.println("Shops are as listed");
 		for (int i = 0; i < shops.length; i++) {
 			System.out.println("" + i + shops[i].toString());
 		}
 	}
 
-	private static void displayProduct() {
+	private static void displayItems(int shopNo) {
 		System.out.println("************************");
 		System.out.println("Products are as listed");
 		System.out.println("Id|Name                    |Brand          |Price in cent");
-		int productId = 0;
-		for (int i = 0; i < shops.length; i++) {
-			int l = shops[i].getAllSales().length;
-			for (int j = 0; j < l; j++) {
-				printProduct(productId, i, j); 
-				productId++;
-			}
+		int productId = 1;
+		for (Product product : shops[shopNo].getAllSales()) {
+			printProduct(productId, product);
+			productId++;
 		}
 	}
 	
 	/**
 	 * prints the product in sorted order by their ids
 	 * @param productId product id
-	 * @param i the ith shop in the list
-	 * @param j the jth product in the shop i
+	 * @param product the product object to be displayed
 	 */
-	private static void printProduct(int productId, int i, int j) {
-		//Hardcoded for correctness purposes; similar to CHAR(24) and CHAR(15) in MySQL
-		final int fixedProductSize = 24;
-		final int fixedShopSize = 15;
-		//generate padding for each product name
-		String fixedProductName = shops[i].getAllSales()[j].getName();
-		int fixedProductNameLength = fixedProductName.length();
-		if(fixedProductName.length() < fixedProductSize) {
-    		for(int k = 0; k < fixedProductSize - fixedProductNameLength; k++) {
-    			fixedProductName += " ";
-    		}
-    	}
-		
-		//generate padding for each brand name
-		String fixedBrandName = shops[i].getAllSales()[j].getBrand();
-		int fixedBrandNameLength = fixedBrandName.length();
-		if(fixedBrandName.length() < fixedShopSize) {
-    		for(int k = 0; k < fixedShopSize - fixedBrandNameLength; k++) {
-    			fixedBrandName += " ";
-    		}
-    	}
-		
+	private static void printProduct(int productId, Product product) {
+		StringBuilder fixedProductName = generatePaddings(product.getName(), PRODUCT_NAME_LENGTH);
+		StringBuilder fixedBrandName = generatePaddings(product.getBrand(), SHOP_NAME_LENGTH);
+
 		System.out.println(" " + productId + "|" + fixedProductName + "|"
-				+ fixedBrandName + "|" + shops[i].getAllSales()[j].getPriceInCent());
+				+ fixedBrandName + "|" + product.getPriceInCent());
 	}
 
-	private static void goToShopPage(int value) {
-		System.out.println("************************");
-		System.out.println("UNDER CONSTRUCTION");
-		System.out.println("This page is still under construction. Expect for Iteration 2!");
+	private static StringBuilder generatePaddings(String product, int size) {
+		StringBuilder fixedName = new StringBuilder(product);
+		int fixedNameLength = fixedName.length();
+		if(fixedName.length() < size) {
+			fixedName.append(" ".repeat(Math.max(0, size - fixedNameLength)));
+		}
+		return fixedName;
 	}
 
-	private int getUserInput() {
-		return keyboardIn.nextInt();
+	private static int getUserInput() {
+		return scanner.nextInt();
 	}
 }
