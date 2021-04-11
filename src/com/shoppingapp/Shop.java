@@ -69,10 +69,25 @@ public class Shop {
     }
     
     public String toString() {
-    	this.shopName = shopName;
-        this.ownerName = ownerName;
-        this.allSales = allSales;
-    	return "|" + this.shopName + "|" + this.ownerName;
+    	//Hardcoded for correctness purposes; similar to CHAR(10) in MySQL
+    	final int shopNameLength = 10;
+    	final int ownerNameLength = 10;
+    	//generate padding for each shop name
+    	String fixedShopName = this.shopName;
+    	if(this.shopName.length() < shopNameLength) {
+    		for(int i = 0; i < shopNameLength - this.shopName.length(); i++) {
+    			fixedShopName += " ";
+    		}
+    	}
+    	
+    	//generate padding for each owner name
+    	String fixedOwnerName = this.ownerName;
+    	if(this.ownerName.length() < ownerNameLength) {
+    		for(int i = 0; i < ownerNameLength - this.ownerName.length(); i++) {
+    			fixedOwnerName += " ";
+    		}
+    	}
+    	return "|" + fixedShopName + "|" +fixedOwnerName;
     }
     
     
