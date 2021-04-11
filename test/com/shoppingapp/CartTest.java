@@ -12,6 +12,12 @@ class CartTest {
 		Product productUnderTest3 = new Product("Product Name A", "Product Brand", 200);
 		Cart cartUnderTest = new Cart();
 
+		basicTest(productUnderTest1, productUnderTest2, cartUnderTest);
+
+		duplicateTest(productUnderTest2, productUnderTest3, cartUnderTest);
+	}
+
+	private void basicTest(Product productUnderTest1, Product productUnderTest2, Cart cartUnderTest) {
 		assertEquals(0, cartUnderTest.productNums());
 
 		boolean testResult = cartUnderTest.addProduct(productUnderTest1, 2);
@@ -22,7 +28,10 @@ class CartTest {
 		testResult = cartUnderTest.addProduct(productUnderTest2, 0);
 		assertFalse(testResult);
 		assertEquals(1, cartUnderTest.productNums());
+	}
 
+	private void duplicateTest(Product productUnderTest2, Product productUnderTest3, Cart cartUnderTest) {
+		boolean testResult;
 		testResult = cartUnderTest.addProduct(productUnderTest2, 1);
 		assertTrue(testResult);
 		assertEquals(2, cartUnderTest.productNums());
