@@ -15,7 +15,7 @@ public class Shop {
     private final String[] randomShopNames = {"Goblin Market", "Bauer Hall", "Village Hall"};
     
     private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google"};
-    
+
     //private final Product[] randomProducts = {new Product(), new Product(), new Product()};
 
     public Shop(String shopName, String ownerName, Product[] allSales){
@@ -73,11 +73,9 @@ public class Shop {
     	final int shopNameLength = 10;
     	final int ownerNameLength = 10;
     	//generate padding for each shop name
-    	String fixedShopName = this.shopName;
+    	StringBuilder fixedShopName = new StringBuilder(this.shopName);
     	if(this.shopName.length() < shopNameLength) {
-    		for(int i = 0; i < shopNameLength - this.shopName.length(); i++) {
-    			fixedShopName += " ";
-    		}
+		    fixedShopName.append(" ".repeat(shopNameLength - this.shopName.length()));
     	}
     	
     	//generate padding for each owner name
