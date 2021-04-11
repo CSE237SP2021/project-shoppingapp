@@ -2,6 +2,7 @@ package com.shoppingapp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Cart {
 
@@ -56,5 +57,9 @@ public class Cart {
 
 	public int getProductCount(Product product) {
 		return cartProducts.get(product);
+	}
+
+	public Set<Map.Entry<Product, Integer>> getCartProductsEntries() {
+		return cartProducts.entrySet();
 	}
 }
