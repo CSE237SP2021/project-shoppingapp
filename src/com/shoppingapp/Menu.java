@@ -80,12 +80,28 @@ public class Menu {
 	}
 
 	/**
-	 * TODO: Fill in the searchForItem functionality
+	 * searches an element by its name.
 	 */
 	private static void searchForItem() {
 		System.out.println("************************");
-		System.out.println("UNDER CONSTRUCTION");
-		System.out.println("This page is still under construction. Expect for Iteration 2!");
+		System.out.println("Please type your search queries");
+		String choice = "";
+		if (newScanner.hasNextLine()) {
+			choice = newScanner.nextLine();
+		}
+		//Currently only supports filtering by name
+		System.out.println("All products that matches your search are as listed");
+		System.out.println("Id|Name                    |Brand          |Price in cent");
+		int productId = 0;
+		for (int i = 0; i < shops.length; i++) {
+			int l = shops[i].getAllSales().length;
+			for (int j = 0; j < l; j++) {
+				if(shops[i].getAllSales()[j].getName().indexOf(choice) >= 0) {
+				printProduct(productId, i, j); 
+				}
+				productId++;
+			}
+		}
 	}
 
 	private static void viewCart() {
@@ -148,6 +164,23 @@ public class Menu {
 	}
 	
 	/**
+	 * add paddings to the string
+	 * @param fixedProductName the product name we have to add paddings on
+	 * @param expectedLength the expected length of the function
+	 * @return fixedProductName the padded name
+	 */
+	private static String printProductHelper(String fixedProductName, int expectedLength) {
+		//generate padding for each product name
+		int fixedProductNameLength = fixedProductName.length();
+		if(fixedProductName.length() < expectedLength) {
+    		for(int k = 0; k < expectedLength - fixedProductNameLength; k++) {
+    			fixedProductName += " ";
+    		}
+    	}
+		return fixedProductName;
+	}
+	
+	/**
 	 * prints the product in sorted order by their ids
 	 * @param productId product id
 	 * @param i the ith shop in the list
@@ -159,21 +192,11 @@ public class Menu {
 		final int fixedShopSize = 15;
 		//generate padding for each product name
 		String fixedProductName = shops[i].getAllSales()[j].getName();
-		int fixedProductNameLength = fixedProductName.length();
-		if(fixedProductName.length() < fixedProductSize) {
-    		for(int k = 0; k < fixedProductSize - fixedProductNameLength; k++) {
-    			fixedProductName += " ";
-    		}
-    	}
+		fixedProductName = printProductHelper(fixedProductName, fixedProductSize);
 		
 		//generate padding for each brand name
 		String fixedBrandName = shops[i].getAllSales()[j].getBrand();
-		int fixedBrandNameLength = fixedBrandName.length();
-		if(fixedBrandName.length() < fixedShopSize) {
-    		for(int k = 0; k < fixedShopSize - fixedBrandNameLength; k++) {
-    			fixedBrandName += " ";
-    		}
-    	}
+		fixedBrandName = printProductHelper(fixedBrandName, fixedShopSize);
 		
 		System.out.println(" " + productId + "|" + fixedProductName + "|"
 				+ fixedBrandName + "|" + shops[i].getAllSales()[j].getPriceInCent());
