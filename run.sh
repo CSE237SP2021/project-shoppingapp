@@ -1,5 +1,5 @@
 #!/bin/bash
 
-javac src/com/shoppingapp/*.java
-java -cp src com.shoppingapp.Menu
+javac src/com/shoppingapp/*.java -d out
+java -cp out com.shoppingapp.Menu
 
