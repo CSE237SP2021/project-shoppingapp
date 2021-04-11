@@ -199,7 +199,9 @@ public class Menu {
 		StringBuilder fixedName = new StringBuilder(name);
 		int fixedNameLength = fixedName.length();
 		if(fixedName.length() < expectedLength) {
-			fixedName.append(" ".repeat(Math.max(0, expectedLength - fixedNameLength)));
+			for (int i = 0; i < expectedLength - fixedNameLength; i++) {
+				fixedName.append(" ");
+			}
 		}
 		return fixedName;
 	}
