@@ -39,6 +39,9 @@ public class Menu {
 		newScanner.close();
 	}
 
+	/**
+	 * Provides the users a menu for recommendation.
+	 */
 	private static void makeMenuChoice() {
 		int value = Integer.MAX_VALUE;
 		while (value != 0) {
@@ -68,18 +71,21 @@ public class Menu {
 			}
 		}
 	}
-
-	private static void searchForItem() {
-		System.out.println("************************");
-		System.out.println("UNDER CONSTRUCTION");
-		System.out.println("This page is still under construction. Expect for Iteration 2!");
-	}
-
+	
 	private static void viewItems() {
 		displayShop();
 		displayProduct();
 		int value = getValidOutput(newScanner, shops.length);
 		goToShopPage(value);
+	}
+
+	/**
+	 * TODO: Fill in the searchForItem functionality
+	 */
+	private static void searchForItem() {
+		System.out.println("************************");
+		System.out.println("UNDER CONSTRUCTION");
+		System.out.println("This page is still under construction. Expect for Iteration 2!");
 	}
 
 	private static void viewCart() {
@@ -129,17 +135,48 @@ public class Menu {
 
 	private static void displayProduct() {
 		System.out.println("************************");
-		System.out.println("Projcts are as listed");
-		System.out.println("Id|Name|Brand|Price in cent");
+		System.out.println("Products are as listed");
+		System.out.println("Id|Name                    |Brand          |Price in cent");
 		int productId = 0;
 		for (int i = 0; i < shops.length; i++) {
 			int l = shops[i].getAllSales().length;
 			for (int j = 0; j < l; j++) {
-				System.out.println(productId + "|" + shops[i].getAllSales()[j].getName() + "|"
-						+ shops[i].getAllSales()[j].getBrand() + "|" + shops[i].getAllSales()[j].getPriceInCent());
+				printProduct(productId, i, j); 
 				productId++;
 			}
 		}
+	}
+	
+	/**
+	 * prints the product in sorted order by their ids
+	 * @param productId product id
+	 * @param i the ith shop in the list
+	 * @param j the jth product in the shop i
+	 */
+	private static void printProduct(int productId, int i, int j) {
+		//Hardcoded for correctness purposes; similar to CHAR(24) and CHAR(15) in MySQL
+		final int fixedProductSize = 24;
+		final int fixedShopSize = 15;
+		//generate padding for each product name
+		String fixedProductName = shops[i].getAllSales()[j].getName();
+		int fixedProductNameLength = fixedProductName.length();
+		if(fixedProductName.length() < fixedProductSize) {
+    		for(int k = 0; k < fixedProductSize - fixedProductNameLength; k++) {
+    			fixedProductName += " ";
+    		}
+    	}
+		
+		//generate padding for each brand name
+		String fixedBrandName = shops[i].getAllSales()[j].getBrand();
+		int fixedBrandNameLength = fixedBrandName.length();
+		if(fixedBrandName.length() < fixedShopSize) {
+    		for(int k = 0; k < fixedShopSize - fixedBrandNameLength; k++) {
+    			fixedBrandName += " ";
+    		}
+    	}
+		
+		System.out.println(" " + productId + "|" + fixedProductName + "|"
+				+ fixedBrandName + "|" + shops[i].getAllSales()[j].getPriceInCent());
 	}
 
 	private static void goToShopPage(int value) {
