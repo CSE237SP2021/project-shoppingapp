@@ -10,8 +10,8 @@ public class Menu {
 	private static final int SHOP_NAME_LENGTH = 15;
 	private static final int PRICE_LENGTH = 13;
 
-	private static Shop[] shops = new Shop[SHOP_SIZE];
-	private static Cart cart = new Cart();
+	private static final Shop[] shops = new Shop[SHOP_SIZE];
+	private static final Cart cart = new Cart();
 
 	private static Scanner scanner;
 
@@ -95,18 +95,18 @@ public class Menu {
 		System.out.println("************************");
 		System.out.println("Please type your search queries");
 		String choice = "";
-		if (newScanner.hasNextLine()) {
-			choice = newScanner.nextLine();
+		if (scanner.hasNextLine()) {
+			choice = scanner.nextLine();
 		}
 		//Currently only supports filtering by name
 		System.out.println("All products that matches your search are as listed");
 		System.out.println("Id|Name                    |Brand          |Price in cent");
 		int productId = 0;
-		for (int i = 0; i < shops.length; i++) {
-			int l = shops[i].getAllSales().length;
+		for (Shop shop : shops) {
+			int l = shop.getAllSales().length;
 			for (int j = 0; j < l; j++) {
-				if(shops[i].getAllSales()[j].getName().indexOf(choice) >= 0) {
-				printProduct(productId, i, j); 
+				if (shop.getAllSales()[j].getName().contains(choice)) {
+					printProduct(productId, shop.getAllSales()[j]);
 				}
 				productId++;
 			}
@@ -175,31 +175,13 @@ public class Menu {
 			productId++;
 		}
 	}
-	
-	/**
-	 * add paddings to the string
-	 * @param fixedProductName the product name we have to add paddings on
-	 * @param expectedLength the expected length of the function
-	 * @return fixedProductName the padded name
-	 */
-	private static String printProductHelper(String fixedProductName, int expectedLength) {
-		//generate padding for each product name
-		int fixedProductNameLength = fixedProductName.length();
-		if(fixedProductName.length() < expectedLength) {
-    		for(int k = 0; k < expectedLength - fixedProductNameLength; k++) {
-    			fixedProductName += " ";
-    		}
-    	}
-		return fixedProductName;
-	}
-	
+
 	/**
 	 * prints the product in sorted order by their ids
 	 * @param productId product id
 	 * @param product the product object to be displayed
 	 */
-
-private static void printProduct(int productId, Product product) {
+	private static void printProduct(int productId, Product product) {
 		StringBuilder fixedProductName = generatePaddings(product.getName(), PRODUCT_NAME_LENGTH);
 		StringBuilder fixedBrandName = generatePaddings(product.getBrand(), SHOP_NAME_LENGTH);
 
@@ -207,11 +189,17 @@ private static void printProduct(int productId, Product product) {
 				+ fixedBrandName + "|" + product.getPriceInCent());
 	}
 
-	private static StringBuilder generatePaddings(String product, int size) {
-		StringBuilder fixedName = new StringBuilder(product);
+	/**
+	 * add paddings to the string
+	 * @param name the product name we have to add paddings on
+	 * @param expectedLength the expected length of the function
+	 * @return fixedProductName the padded name
+	 */
+	private static StringBuilder generatePaddings(String name, int expectedLength) {
+		StringBuilder fixedName = new StringBuilder(name);
 		int fixedNameLength = fixedName.length();
-		if(fixedName.length() < size) {
-			fixedName.append(" ".repeat(Math.max(0, size - fixedNameLength)));
+		if(fixedName.length() < expectedLength) {
+			fixedName.append(" ".repeat(Math.max(0, expectedLength - fixedNameLength)));
 		}
 		return fixedName;
 	}
