@@ -75,14 +75,16 @@ public class Shop {
     	//generate padding for each shop name
     	StringBuilder fixedShopName = new StringBuilder(this.shopName);
     	if(this.shopName.length() < shopNameLength) {
-		    fixedShopName.append(" ".repeat(shopNameLength - this.shopName.length()));
+		    for(int i = 0; i < shopNameLength - this.shopName.length(); i++) {
+			    fixedShopName.append(" ");
+		    }
     	}
     	
     	//generate padding for each owner name
-    	String fixedOwnerName = this.ownerName;
+	    StringBuilder fixedOwnerName = new StringBuilder(this.ownerName);
     	if(this.ownerName.length() < ownerNameLength) {
     		for(int i = 0; i < ownerNameLength - this.ownerName.length(); i++) {
-    			fixedOwnerName += " ";
+    			fixedOwnerName.append(" ");
     		}
     	}
     	return "|" + fixedShopName + "|" +fixedOwnerName;
