@@ -90,6 +90,7 @@ public class Menu {
 			int numberOfTheItems = getUserInput();
 			cart.addProduct(productToBeAdd, numberOfTheItems);
 		}
+		System.out.println("Purchase done, going back to the menu.");
 	}
 
 	/**
@@ -165,7 +166,6 @@ public class Menu {
 				} catch (Exception e) {
 					System.out.println("Invalid input: This is not a value!");
 				}
-
 			}
 		}
 		return value;
@@ -221,6 +221,8 @@ public class Menu {
 	}
 
 	private static int getUserInput() {
-		return scanner.nextInt();
+		int number = scanner.nextInt();
+		scanner.nextLine();
+		return number;
 	}
 }
