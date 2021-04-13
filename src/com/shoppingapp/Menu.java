@@ -36,7 +36,7 @@ public class Menu {
 	private static void welcomePage() {
 		System.out.println("Welcome to the Shopping App, best Shopping App in 2021!");
 		scanner = new Scanner(System.in); // Create a Scanner object
-		// 1. Search items 2. View items 3. View cart 0. Quit
+		// 1. Search items 2. View items 3. View cart 4. Checkout Cart 0. Quit
 		makeMenuChoice();
 		scanner.close();
 	}
@@ -52,8 +52,9 @@ public class Menu {
 			System.out.println("1: Search for a specific item");
 			System.out.println("2: View items");
 			System.out.println("3: View cart");
+			System.out.println("4: Checkout cart");
 			System.out.println("0: Quit");
-			value = getValidUserInput(scanner, 4);
+			value = getValidUserInput(scanner, 5);
 			switch (value) {
 			case 0:
 				System.out.println("Bye!");
@@ -63,9 +64,12 @@ public class Menu {
 				break;
 			case 2:
 				viewItems();
-				break;
+				break; 
 			case 3:
 				viewCart();
+				break;
+			case 4:
+				checkoutCart();
 				break;
 			default:
 				break;
@@ -124,6 +128,16 @@ public class Menu {
 		}
 		System.out.println();
 		System.out.println("Total price in cent: " + cart.totalPriceInCent());
+	}
+	
+	// checkout cart will clear all the items in the cart.
+	private static void checkoutCart() {
+		int totalPrice = cart.totalPriceInCent();
+		cart.checkoutCartProducts();
+		System.out.println("************************");
+		System.out.println("The items in your cart is all cleared");
+		System.out.println();
+		System.out.println("Total price to pay in cent: " + totalPrice);
 	}
 
 	/**
