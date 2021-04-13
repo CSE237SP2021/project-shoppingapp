@@ -62,4 +62,8 @@ public class Cart {
 	public Set<Map.Entry<Product, Integer>> getCartProductsEntries() {
 		return cartProducts.entrySet();
 	}
+	
+	public void checkoutCartProducts() {
+		cartProducts.clear();
+	}
 }
