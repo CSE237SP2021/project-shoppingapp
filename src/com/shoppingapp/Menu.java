@@ -1,5 +1,6 @@
 package com.shoppingapp;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -73,27 +74,12 @@ public class Menu {
 				break;
 			default:
 				break;
-
 			}
 		}
 	}
-	
-	private static void viewItems() {
-		displayShops();
-		int shopNo = getValidUserInput(scanner, shops.length);
-		displayItems(shopNo);
-		System.out.println("Please enter the ID of the element to add to cart. \"0\" for exit");
-		int productNo = getValidUserInput(scanner, shops[shopNo].getAllSales().length + 1);
-		if (productNo > 0) {
-			Product productToBeAdd = shops[shopNo].getAllSales()[productNo - 1];
-			System.out.print("Please enter the number of the item you would like to buy: ");
-			int numberOfTheItems = getUserInput();
-			cart.addProduct(productToBeAdd, numberOfTheItems);
-		}
-		System.out.println("Purchase done, going back to the menu.");
-	}
 
 	/**
+	 * Option 1: search for a specific item
 	 * searches an element by its name.
 	 */
 	private static void searchForItem() {
@@ -117,18 +103,71 @@ public class Menu {
 			}
 		}
 	}
+	
+	private static void viewItems() {
+		displayShops();
+		int shopNo = getValidUserInput(scanner, shops.length);
+		displayItems(shopNo);
+		System.out.println("Please enter the ID of the element to add to cart. \"0\" for exit");
+		int productNo = getValidUserInput(scanner, shops[shopNo].getAllSales().length + 1);
+		if (productNo > 0) {
+			Product productToBeAdd = shops[shopNo].getAllSales()[productNo - 1];
+			System.out.print("Please enter the number of the item you would like to buy: ");
+			int numberOfTheItems = getUserIntInput();
+			cart.addProduct(productToBeAdd, numberOfTheItems);
+		}
+		System.out.println("Purchase done, going back to the menu.");
+	}
 
 	private static void viewCart() {
 		System.out.println("************************");
-			System.out.println("The items in your cart");
+		System.out.println("The items in your cart");
+		System.out.println("Name                    |Price in cent|Count");
 		for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
-			System.out.println("Name                    |Price in cent|Count");
 			StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
 			StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
 			System.out.println(productName + "|" + price + productCountPair.getValue());
 		}
 		System.out.println();
 		System.out.println("Total price in cent: " + cart.totalPriceInCent());
+		displayCartMenu();
+	}
+	
+	// display cart menu options
+	private static void displayCartMenu() {
+		System.out.println("Please make your choice, by entering the assigned number");
+		System.out.println("1: Remove an item from the cart");
+		System.out.println("2: Modify the number of a certain item in the cart");
+		System.out.println("3: Checkout cart");
+		System.out.println("0: Quit to main manu");
+		int value = getValidUserInput(scanner, 4);
+		switch (value) {
+		case 0:
+			System.out.println("Going back to main menu");
+			break;
+		case 1:
+			removeItemFromCart();
+			break;
+		case 2:
+			break; 
+		case 3:
+			checkoutCart();
+			break;
+		default:
+			break;
+		}	
+	}
+	
+	// remove item from cart
+	private static void removeItemFromCart() {
+		String itemName = getValidItemNameInput(scanner);
+		for (Iterator<Map.Entry<Product, Integer>> it = cart.getCartProductsEntries().iterator(); it.hasNext();){
+		    Map.Entry<Product, Integer> item = it.next();
+		    if( item.getKey().getName().equals(itemName) ) {
+			    it.remove();
+		    }
+		}
+		System.out.println("Item removed from the cart successfully");
 	}
 	
 	// checkout cart will clear all the items in the cart.
@@ -139,6 +178,33 @@ public class Menu {
 		System.out.println("The items in your cart is all cleared");
 		System.out.println();
 		System.out.println("Total price to pay in cent: " + totalPrice);
+		System.out.println();
+	}
+	
+	// check item name
+	private static String getValidItemNameInput(Scanner newScanner) {
+		String choice;
+		String value = "";
+		boolean successful = false;
+		while (!successful) {
+			System.out.println("Please enter the name of the item to remove from cart:");
+			if (newScanner.hasNextLine()) {
+				choice = newScanner.nextLine();
+				for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
+					StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
+					StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
+					String itemName = productName.toString().trim();
+					if(itemName.equals(choice)) {
+						value = choice;
+						successful = true;
+					}
+				}
+			}
+			if(!successful) {
+				System.out.println("Item name doesn't exit in the cart.");
+			}
+		}
+		return value;
 	}
 
 	/**
@@ -220,7 +286,7 @@ public class Menu {
 		return fixedName;
 	}
 
-	private static int getUserInput() {
+	private static int getUserIntInput() {
 		int number = scanner.nextInt();
 		scanner.nextLine();
 		return number;
