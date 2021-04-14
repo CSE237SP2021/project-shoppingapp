@@ -169,11 +169,16 @@ public class Menu {
 		for (Iterator<Map.Entry<Product, Integer>> it = cart.getCartProductsEntries().iterator(); it.hasNext();){
 		    Map.Entry<Product, Integer> item = it.next();
 		    if( item.getKey().getName().equals(itemName) ) {
-		    	int currentNumber = item.getValue();
-				cart.addProduct(item.getKey(), numberOfTheItems - currentNumber);
+				if (numberOfTheItems == 0) {
+					it.remove();
+				}
+				else {
+			    	int currentNumber = item.getValue();
+					cart.addProduct(item.getKey(), numberOfTheItems - currentNumber);
+				}
 		    }
 		}
-		System.out.println("Item removed from the cart successfully");
+		System.out.println("Item number modified successfully");
 	}
 	
 	// remove item from cart
@@ -185,7 +190,7 @@ public class Menu {
 			    it.remove();
 		    }
 		}
-		System.out.println("Item number modified successfully");
+		System.out.println("Item removed from the cart successfully");
 	}
 	
 	// checkout cart will clear all the items in the cart.
@@ -306,6 +311,11 @@ public class Menu {
 
 	private static int getUserIntInput() {
 		int number = scanner.nextInt();
+		while(number < 0) {
+			scanner.nextLine();
+			System.out.println("Please enter a non-nagetive number:");
+			number = scanner.nextInt();
+		}
 		scanner.nextLine();
 		return number;
 	}
