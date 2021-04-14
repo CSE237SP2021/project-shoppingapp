@@ -104,6 +104,7 @@ public class Menu {
 		}
 	}
 	
+	// option 2 view items
 	private static void viewItems() {
 		displayShops();
 		int shopNo = getValidUserInput(scanner, shops.length);
@@ -119,6 +120,7 @@ public class Menu {
 		System.out.println("Purchase done, going back to the menu.");
 	}
 
+	// option 2 view cart
 	private static void viewCart() {
 		System.out.println("************************");
 		System.out.println("The items in your cart");
@@ -149,6 +151,7 @@ public class Menu {
 			removeItemFromCart();
 			break;
 		case 2:
+			modiftyItemNumberInCart();
 			break; 
 		case 3:
 			checkoutCart();
@@ -156,6 +159,21 @@ public class Menu {
 		default:
 			break;
 		}	
+	}
+
+	// modify number of items in cart
+	private static void modiftyItemNumberInCart() {
+		String itemName = getValidItemNameInput(scanner);
+		System.out.print("Please enter the number of the item you would like to change to: ");
+		int numberOfTheItems = getUserIntInput();
+		for (Iterator<Map.Entry<Product, Integer>> it = cart.getCartProductsEntries().iterator(); it.hasNext();){
+		    Map.Entry<Product, Integer> item = it.next();
+		    if( item.getKey().getName().equals(itemName) ) {
+		    	int currentNumber = item.getValue();
+				cart.addProduct(item.getKey(), numberOfTheItems - currentNumber);
+		    }
+		}
+		System.out.println("Item removed from the cart successfully");
 	}
 	
 	// remove item from cart
@@ -167,7 +185,7 @@ public class Menu {
 			    it.remove();
 		    }
 		}
-		System.out.println("Item removed from the cart successfully");
+		System.out.println("Item number modified successfully");
 	}
 	
 	// checkout cart will clear all the items in the cart.
@@ -187,7 +205,7 @@ public class Menu {
 		String value = "";
 		boolean successful = false;
 		while (!successful) {
-			System.out.println("Please enter the name of the item to remove from cart:");
+			System.out.println("Please enter the name of the item in the cart:");
 			if (newScanner.hasNextLine()) {
 				choice = newScanner.nextLine();
 				for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
