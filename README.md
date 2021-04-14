@@ -47,6 +47,9 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 * What user stories do you intend to complete next iteration?
   * Improve the formatting of the price (show the price in dollars instead of cents)
   * Add more products/shops for demonstration purpose.
+  * Add a list of top sales
+  * Perfect the user interface
+  * finalize and fix all the bugs
 * Is there anything that you implemented but doesn't currently work?
   * N/A
 * What commands are needed to compile and run your code from the command line 
