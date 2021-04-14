@@ -17,7 +17,9 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 * What user stories were completed this iteration?
   * Users can add a product to the shopping cart.
   * Users can remove a product from the shopping cart.
+  * Users can search a product by its name.
   * Shop main page displays a list of products.
+  * The print functionality has been fixed for better command line user interface.
   * The shop menu page shows options for users: 1. Search Items 2. View items 3. View cart 0. Quit.<br>
 
 * What user stories do you intend to complete next iteration?
