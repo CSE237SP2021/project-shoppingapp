@@ -32,4 +32,17 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 * What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
   * `./run.sh`
 
+### Iteration 2
+
+* What user stories were completed this iteration?
+  * Users can view the items in the cart
+  * Users can modify the number of items in the cart
+  * Users can remove items in the cart
+  * Users can checkout all items in the cart
+* What user stories do you intend to complete next iteration?
+  * 
+* Is there anything that you implemented but doesn't currently work?
+  * N/A
+* What commands are needed to compile and run your code from the command line 
+  * `./run.sh`
 
