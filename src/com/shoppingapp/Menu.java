@@ -128,7 +128,7 @@ public class Menu {
 		for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
 			StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
 			StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
-			System.out.println(productName + "|" + price + productCountPair.getValue());
+			System.out.println(productName + "|" + price + "|" + productCountPair.getValue());
 		}
 		System.out.println();
 		System.out.println("Total price in cent: " + cart.totalPriceInCent());
@@ -151,7 +151,7 @@ public class Menu {
 			removeItemFromCart();
 			break;
 		case 2:
-			modiftyItemNumberInCart();
+			modifyItemNumberInCart();
 			break; 
 		case 3:
 			checkoutCart();
@@ -162,7 +162,7 @@ public class Menu {
 	}
 
 	// modify number of items in cart
-	private static void modiftyItemNumberInCart() {
+	private static void modifyItemNumberInCart() {
 		String itemName = getValidItemNameInput(scanner);
 		System.out.print("Please enter the number of the item you would like to change to: ");
 		int numberOfTheItems = getUserIntInput();
@@ -173,8 +173,7 @@ public class Menu {
 					it.remove();
 				}
 				else {
-			    	int currentNumber = item.getValue();
-					cart.addProduct(item.getKey(), numberOfTheItems - currentNumber);
+					cart.changeProductCount(item.getKey(), numberOfTheItems);
 				}
 		    }
 		}
