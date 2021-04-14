@@ -35,12 +35,16 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 ### Iteration 2
 
 * What user stories were completed this iteration?
+  * Users can use the "Search Items" option on the shop menu page.
+  * Users can use the "View items" option on the shop menu page
+  * Users can add an item to the cart
   * Users can view the items in the cart
   * Users can modify the number of items in the cart
   * Users can remove items in the cart
-  * Users can checkout all items in the cart
+  * Users can check out all items in the cart
 * What user stories do you intend to complete next iteration?
-  * 
+  * Improve the formatting of the price (show the price in dollars instead of cents)
+  * Add more products/shops for demonstration purpose.
 * Is there anything that you implemented but doesn't currently work?
   * N/A
 * What commands are needed to compile and run your code from the command line 
