@@ -64,6 +64,10 @@ public class Cart {
 	}
 	
 	public void checkoutCartProducts() {
+		for(Product oneProduct: cartProducts.keySet()) {
+			//responsive update
+			oneProduct.increment();
+		}
 		cartProducts.clear();
 	}
 }

@@ -7,20 +7,30 @@ public class Product {
 	private String name;
 	private String brand;
 	private Integer priceInCent;
+	private Integer salesTotalNum;
 	
-	private String[] randomNames = {"Xenoblade", "Green Socks", "Pesticide", "Potion of Invincibility", "Goblin Landmines"};
-	private String[] randomBrands = {"Apple", "Amazon", "Facebook", "Google"};
+	private String[] randomNames = {"Xenoblade", "Green Socks", "Pesticide", "Potion of Invincibility", "Goblin Landmines", "Scroll of Mana"};
+	private String[] randomBrands = {"Apple", "Amazon", "Facebook", "Google", "Robinhood", "Citadel of Adon", "Robotics Facility"};
 
-	public Product(String name, String brand, Integer priceInCent) {
+	public Product(String name, String brand, Integer priceInCent, Integer salesTotalNum) {
 		this.name = name;
 		this.brand = brand;
 		this.priceInCent = priceInCent;
+		this.salesTotalNum = salesTotalNum;
 	}
 	
 	public Product() {
 		this.name = randomNames[(int) Math.floor(Math.random()* randomNames.length)];
 		this.brand = randomBrands[(int) Math.floor(Math.random()* randomBrands.length)];
 		this.priceInCent = (int) Math.floor(Math.random() * 200000);
+		this.salesTotalNum = (int) Math.floor(Math.random() * 20000);
+	}
+	
+	public Product(Product product) {
+		this.name = product.name;
+		this.brand = product.brand;
+		this.priceInCent = product.priceInCent;
+		this.salesTotalNum = product.salesTotalNum;
 	}
 
 	public String getName() {
@@ -34,6 +44,15 @@ public class Product {
 	public Integer getPriceInCent() {
 		return priceInCent;
 	}
+	
+	public Integer getSalesTotalNum() {
+		return salesTotalNum;
+	}
+	
+	public void increment() {
+		salesTotalNum++;
+	}
+	
 
 	@Override
 	public boolean equals(Object o) {

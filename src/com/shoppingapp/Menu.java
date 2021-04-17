@@ -1,5 +1,6 @@
 package com.shoppingapp;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class Menu {
 	private static final int PRODUCT_NAME_LENGTH = 24;
 	private static final int SHOP_NAME_LENGTH = 15;
 	private static final int PRICE_LENGTH = 13;
+	private static final int TOP_SALES_LENGTH = 11;
 
 	private static final Shop[] shops = new Shop[SHOP_SIZE];
 	private static final Cart cart = new Cart();
@@ -48,16 +50,16 @@ public class Menu {
 	private static void makeMenuChoice() {
 		int value = Integer.MAX_VALUE;
 		while (value != 0) {
-			System.out.println("************************");
+			System.out.println("******************************");
 			System.out.println("Please make your choice, by entering the assigned number");
 			System.out.println("1: Search for a specific item");
-			System.out.println("2: View items");
+			System.out.println("2: View shops");
 			System.out.println("3: View cart");
 			System.out.println("4: Checkout cart");
 			System.out.println("0: Quit");
 			value = getValidUserInput(scanner, 5);
 			switch (value) {
-			case 0:
+			case 0: 
 				System.out.println("Bye!");
 				break;
 			case 1:
@@ -83,7 +85,7 @@ public class Menu {
 	 * searches an element by its name.
 	 */
 	private static void searchForItem() {
-		System.out.println("************************");
+		System.out.println("******************************");
 		System.out.println("Please type your search queries");
 		String choice = "";
 		if (scanner.hasNextLine()) {
@@ -91,7 +93,7 @@ public class Menu {
 		}
 		//Currently only supports filtering by name
 		System.out.println("All products that matches your search are as listed");
-		System.out.println("Id|Name                    |Brand          |Price in cent");
+		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
 		int productId = 0;
 		for (Shop shop : shops) {
 			int l = shop.getAllSales().length;
@@ -122,7 +124,7 @@ public class Menu {
 
 	// option 2 view cart
 	private static void viewCart() {
-		System.out.println("************************");
+		System.out.println("******************************");
 		System.out.println("The items in your cart");
 		System.out.println("Name                    |Price in cent|Count");
 		for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
@@ -196,7 +198,7 @@ public class Menu {
 	private static void checkoutCart() {
 		int totalPrice = cart.totalPriceInCent();
 		cart.checkoutCartProducts();
-		System.out.println("************************");
+		System.out.println("******************************");
 		System.out.println("The items in your cart is all cleared");
 		System.out.println();
 		System.out.println("Total price to pay in cent: " + totalPrice);
@@ -260,7 +262,7 @@ public class Menu {
 	}
 
 	private static void displayShops() {
-		System.out.println("************************");
+		System.out.println("******************************");
 		System.out.println("Shops are as listed");
 		for (int i = 0; i < shops.length; i++) {
 			System.out.println("" + i + shops[i].toString());
@@ -268,13 +270,21 @@ public class Menu {
 	}
 
 	private static void displayItems(int shopNo) {
-		System.out.println("************************");
+		Map<Product,Integer> hashMap = new HashMap<>();
+		System.out.println("******************************");
 		System.out.println("Products are as listed");
-		System.out.println("Id|Name                    |Brand          |Price in cent");
+		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
 		int productId = 1;
 		for (Product product : shops[shopNo].getAllSales()) {
+			hashMap.put(product, productId);
 			printProduct(productId, product);
 			productId++;
+		}
+		System.out.println("******************************");
+		System.out.println("Top sales for this shop are as listed");
+		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
+		for (Product product : shops[shopNo].getTopSales()) {
+			printProduct(hashMap.get(product), product);
 		}
 	}
 
@@ -286,9 +296,17 @@ public class Menu {
 	private static void printProduct(int productId, Product product) {
 		StringBuilder fixedProductName = generatePaddings(product.getName(), PRODUCT_NAME_LENGTH);
 		StringBuilder fixedBrandName = generatePaddings(product.getBrand(), SHOP_NAME_LENGTH);
-
-		System.out.println(" " + productId + "|" + fixedProductName + "|"
-				+ fixedBrandName + "|" + product.getPriceInCent());
+		StringBuilder fixedPriceName = generatePaddings(product.getPriceInCent().toString(), PRICE_LENGTH);
+		StringBuilder fixedTopSalesNum = generatePaddings(product.getSalesTotalNum().toString(), TOP_SALES_LENGTH);
+		
+		if(productId < 10) {
+			System.out.println(" " + productId + "|" + fixedProductName + "|"
+				+ fixedBrandName + "|" + fixedPriceName + "|" + fixedTopSalesNum);
+		}else {
+			System.out.println("" + productId + "|" + fixedProductName + "|"
+					+ fixedBrandName + "|" + fixedPriceName + "|" + fixedTopSalesNum);
+		}
+		
 	}
 
 	/**
