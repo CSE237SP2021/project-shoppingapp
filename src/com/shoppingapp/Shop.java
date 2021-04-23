@@ -1,5 +1,6 @@
 package com.shoppingapp;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class Shop {
@@ -12,11 +13,9 @@ public class Shop {
     private String ownerName;
     private Product[] allSales;
     
-    private final String[] randomShopNames = {"Goblin Market", "Bauer Hall", "Village Hall"};
+    private final String[] randomShopNames = {"Goblin Market", "Bauer Hall", "Village Hall", "Fruit Shop"};
     
-    private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google"};
-
-    //private final Product[] randomProducts = {new Product(), new Product(), new Product()};
+    private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google", "Robinhood", "A random unicorn"};
 
     public Shop(String shopName, String ownerName, Product[] allSales){
 
@@ -45,6 +44,15 @@ public class Shop {
     
     public Product[] getAllSales() {
     	return this.allSales;
+    }
+    
+    public Product[] getTopSales() {
+    	Product[] allTopSalesSorted = new Product[this.allSales.length];
+    	for(int i = 0; i < allTopSalesSorted.length; i++) {
+    		allTopSalesSorted[i] = this.allSales[i];
+    	}
+    	Arrays.sort(allTopSalesSorted, (o1, o2) -> o1.getSalesTotalNum().compareTo(o2.getSalesTotalNum()));
+    	return allTopSalesSorted;
     }
     
     /**
