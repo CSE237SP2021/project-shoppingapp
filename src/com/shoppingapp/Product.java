@@ -12,6 +12,13 @@ public class Product {
 	private String[] randomNames = {"Xenoblade", "Green Socks", "Pesticide", "Potion of Invincibility", "Goblin Landmines", "Scroll of Mana"};
 	private String[] randomBrands = {"Apple", "Amazon", "Facebook", "Google", "Robinhood", "Citadel of Adon", "Robotics Facility"};
 
+	public Product(String name, String brand, Integer priceInCent) {
+		this.name = name;
+		this.brand = brand;
+		this.priceInCent = priceInCent;
+		this.salesTotalNum = 0;
+	}
+
 	public Product(String name, String brand, Integer priceInCent, Integer salesTotalNum) {
 		this.name = name;
 		this.brand = brand;
