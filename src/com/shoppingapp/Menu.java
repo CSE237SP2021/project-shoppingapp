@@ -9,8 +9,8 @@ public class Menu {
 	private static final int SHOP_SIZE = 3;
 	// Hardcoded for correctness purposes; similar to CHAR(24) and CHAR(15) in MySQL
 	private static final int PRODUCT_NAME_LENGTH = 24;
-	private static final int SHOP_NAME_LENGTH = 15;
-	private static final int PRICE_LENGTH = 13;
+	private static final int SHOP_NAME_LENGTH = 17;
+	private static final int PRICE_LENGTH = 9;
 	private static final int TOP_SALES_LENGTH = 11;
 
 	private static final Shop[] shops = new Shop[SHOP_SIZE];
@@ -93,7 +93,7 @@ public class Menu {
 		}
 		//Currently only supports filtering by name
 		System.out.println("All products that matches your search are as listed");
-		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
+		System.out.println("Id|Name                    |Brand            |Price |Total Sales");
 		int productId = 0;
 		for (Shop shop : shops) {
 			int l = shop.getAllSales().length;
@@ -126,14 +126,14 @@ public class Menu {
 	private static void viewCart() {
 		System.out.println("******************************");
 		System.out.println("The items in your cart");
-		System.out.println("Name                    |Price in cent|Count");
+		System.out.println("Name                    |Price    |Count");
 		for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
 			StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
-			StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
+			StringBuilder price = generatePaddings(convertCentToDollar(productCountPair.getKey().getPriceInCent()), PRICE_LENGTH);
 			System.out.println(productName + "|" + price + "|" + productCountPair.getValue());
 		}
 		System.out.println();
-		System.out.println("Total price in cent: " + cart.totalPriceInCent());
+		System.out.println("Total price: " + convertCentToDollar(cart.totalPriceInCent()));
 		displayCartMenu();
 	}
 	
@@ -201,7 +201,7 @@ public class Menu {
 		System.out.println("******************************");
 		System.out.println("The items in your cart is all cleared");
 		System.out.println();
-		System.out.println("Total price to pay in cent: " + totalPrice);
+		System.out.println("Total price to pay: " + convertCentToDollar(totalPrice));
 		System.out.println();
 	}
 	
@@ -215,9 +215,7 @@ public class Menu {
 			if (newScanner.hasNextLine()) {
 				choice = newScanner.nextLine();
 				for (Map.Entry<Product, Integer> productCountPair: cart.getCartProductsEntries()) {
-					StringBuilder productName = generatePaddings(productCountPair.getKey().getName(), PRODUCT_NAME_LENGTH);
-					StringBuilder price = generatePaddings("" + productCountPair.getKey().getPriceInCent(), PRICE_LENGTH);
-					String itemName = productName.toString().trim();
+					String itemName = productCountPair.getKey().getName().toString().trim();
 					if(itemName.equals(choice)) {
 						value = choice;
 						successful = true;
@@ -273,7 +271,7 @@ public class Menu {
 		Map<Product,Integer> hashMap = new HashMap<>();
 		System.out.println("******************************");
 		System.out.println("Products are as listed");
-		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
+		System.out.println("Id|Name                    |Brand            |Price    |Total Sales");
 		int productId = 1;
 		for (Product product : shops[shopNo].getAllSales()) {
 			hashMap.put(product, productId);
@@ -282,7 +280,7 @@ public class Menu {
 		}
 		System.out.println("******************************");
 		System.out.println("Top sales for this shop are as listed");
-		System.out.println("Id|Name                    |Brand          |Price in cent|Total Sales");
+		System.out.println("Id|Name                    |Brand            |Price    |Total Sales");
 		for (Product product : shops[shopNo].getTopSales()) {
 			printProduct(hashMap.get(product), product);
 		}
@@ -296,7 +294,7 @@ public class Menu {
 	private static void printProduct(int productId, Product product) {
 		StringBuilder fixedProductName = generatePaddings(product.getName(), PRODUCT_NAME_LENGTH);
 		StringBuilder fixedBrandName = generatePaddings(product.getBrand(), SHOP_NAME_LENGTH);
-		StringBuilder fixedPriceName = generatePaddings(product.getPriceInCent().toString(), PRICE_LENGTH);
+		StringBuilder fixedPriceName = generatePaddings(convertCentToDollar(product.getPriceInCent()), PRICE_LENGTH);
 		StringBuilder fixedTopSalesNum = generatePaddings(product.getSalesTotalNum().toString(), TOP_SALES_LENGTH);
 		
 		if(productId < 10) {
@@ -335,5 +333,9 @@ public class Menu {
 		}
 		scanner.nextLine();
 		return number;
+	}
+
+	private static String convertCentToDollar(int priceInCent) {
+		return "$" + priceInCent / 100 + "." + priceInCent % 100;
 	}
 }
