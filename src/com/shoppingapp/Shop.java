@@ -15,7 +15,7 @@ public class Shop {
     
     private final String[] randomShopNames = {"Goblin Market", "Bauer Hall", "Village Hall", "Fruit Shop"};
     
-    private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google", "Robinhood", "A random unicorn"};
+    private final String[] randomOwners = {"Apple", "Amazon", "Facebook", "Google", "Robinhood", "Random"};
 
     public Shop(String shopName, String ownerName, Product[] allSales){
 
@@ -51,7 +51,7 @@ public class Shop {
     	for(int i = 0; i < allTopSalesSorted.length; i++) {
     		allTopSalesSorted[i] = this.allSales[i];
     	}
-    	Arrays.sort(allTopSalesSorted, (o1, o2) -> o1.getSalesTotalNum().compareTo(o2.getSalesTotalNum()));
+    	Arrays.sort(allTopSalesSorted, (o1, o2) -> o2.getSalesTotalNum().compareTo(o1.getSalesTotalNum()));
     	return allTopSalesSorted;
     }
     
