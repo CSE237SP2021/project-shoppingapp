@@ -16,7 +16,8 @@ public class Cart {
 	// add certain number of products to the cart
 	public boolean addProduct(Product product, Integer count) {
 		if (count < 1) {
-			System.err.println("Invalid product counts when adding product to the cart");
+			System.out.println();
+			System.err.println("                    Invalid product counts when adding product to the cart. Please reenter");
 			return false;
 		}
 
