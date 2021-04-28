@@ -97,6 +97,4 @@ public class Shop {
     	}
     	return "|" + fixedShopName + "|" +fixedOwnerName;
     }
-    
-    
 }
