@@ -61,6 +61,7 @@ For best practice, we use Git(version control), JUnit tests for code quality con
   * Users now can see a list of top sales
   * Added more products/shops for demonstration purpose.
   * Users now can see the price in dollars instead of cents
+  * Spacing and blank lines are used to improve the UI
 * Is there anything that you implemented but doesn't currently work?
   * N/A
 * What commands are needed to compile and run your code from the command line
