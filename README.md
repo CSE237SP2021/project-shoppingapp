@@ -55,3 +55,13 @@ For best practice, we use Git(version control), JUnit tests for code quality con
 * What commands are needed to compile and run your code from the command line 
   * `./run.sh`
 
+### Iteration 3
+
+* What user stories were completed this iteration?
+  * Users now can see a list of top sales
+  * Added more products/shops for demonstration purpose.
+  * Users now can see the price in dollars instead of cents
+* Is there anything that you implemented but doesn't currently work?
+  * N/A
+* What commands are needed to compile and run your code from the command line
+  * `./run.sh`
