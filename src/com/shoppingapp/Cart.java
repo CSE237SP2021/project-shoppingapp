@@ -67,7 +67,7 @@ public class Cart {
 	public void checkoutCartProducts() {
 		for(Product oneProduct: cartProducts.keySet()) {
 			//responsive update
-			oneProduct.increment();
+			oneProduct.increment(cartProducts.get(oneProduct));
 		}
 		cartProducts.clear();
 	}
