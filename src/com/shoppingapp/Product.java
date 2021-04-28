@@ -56,8 +56,8 @@ public class Product {
 		return salesTotalNum;
 	}
 	
-	public void increment() {
-		salesTotalNum++;
+	public void increment(int addNum) {
+		salesTotalNum += addNum;
 	}
 	
 
